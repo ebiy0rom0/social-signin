@@ -11,6 +11,8 @@ function App() {
   const [ password, setPassword ] = useState("")
   const { auth } = useAuth()
 
+  const signup = async () => await auth.signUp({ email, password })
+
   return (
     <div className="flex flex-col w-screen h-screen justify-center items-center">
       <div className="flex gap-x-10 h-12">
@@ -22,24 +24,72 @@ function App() {
         </a>
       </div>
       <h1 className="text-3xl font-bold my-4">Vite + React</h1>
-      <form className="flex flex-col items-center gap-3">
-        <div className="inline-flex w-full">
-          <label htmlFor="email" className="w-16 me-4">e-mail</label>
-          <input id="email" className="border rounded-xl w-full" value={email} onChange={ e => setEmail(e.target.value) } />
+      <form className="w-96">
+        <div className="grid gap-5">
+          <div>
+            <label htmlFor="email" className="block mb-2 ms-1 font-medium">e-mail</label>
+            <input
+              id="email"
+              type="text"
+              className="
+                w-full
+                ps-3 py-1
+                border
+                rounded-md
+                placeholder-gray-400
+                bg-slate-50
+                border-gray-300
+                focus:outline-blue-400
+              "
+              value={email}
+              placeholder="your.address@sekareco.jp"
+              onChange={ e => setEmail(e.target.value) }
+            />
+          </div>
+          <div>
+            <label htmlFor="passwd" className="block mb-1 ms-1 font-medium">password</label>
+            <input
+              id="passwd"
+              type="password"
+              className="
+                w-full
+                ps-3 py-1
+                border
+                rounded-md
+                placeholder-gray-400
+                bg-slate-50
+                border-gray-300
+                focus:outline-blue-400
+              "
+              value={password}
+              placeholder="•••••••••"
+              onChange={ e => setPassword(e.target.value) }
+            />
+          </div>
+          <button
+            className="
+              w-full
+              px-5 py-1.5
+              text-white
+              font-medium
+              border-none
+              rounded-md
+              bg-blue-400
+              border-blue-400/80
+              hover:bg-blue-500/90
+              active:bg-blue-500
+            "
+            onClick={ async () => console.log(await signup()) }
+          >
+            Sign Up
+          </button>
+          <button onClick={() => setCount((count) => count + 1)}>
+            count is {count}
+          </button>
+          <p>
+            Edit <code>src/App.tsx</code> and save to test HMR
+          </p>
         </div>
-        <div className="inline-flex w-full">
-          <label htmlFor="passwd" className="w-16 me-4">password</label>
-          <input id="passwd" className="border rounded-xl w-full" value={password} onChange={ e => setPassword(e.target.value) } />
-        </div>
-        <button className="border px-5 py-1 rounded-full w-full bg-sky-500/80 font-bold text-white" onClick={ () => auth.signUp({ email, password }) }>
-          Sign Up
-        </button>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </form>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
