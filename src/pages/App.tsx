@@ -2,9 +2,14 @@ import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 import * as buttons from 'react-social-login-buttons'
+import { useAuth } from '@/hooks/useAuth'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  const [ email, setEmail ] = useState("")
+  const [ password, setPassword ] = useState("")
+  const { auth } = useAuth()
 
   return (
     <div className="flex flex-col w-screen h-screen justify-center items-center">
@@ -17,33 +22,31 @@ function App() {
         </a>
       </div>
       <h1 className="text-3xl font-bold my-4">Vite + React</h1>
-      <div className="flex flex-col items-center">
+      <form className="flex flex-col items-center gap-3">
+        <div className="inline-flex w-full">
+          <label htmlFor="email" className="w-16 me-4">e-mail</label>
+          <input id="email" className="border rounded-xl w-full" value={email} onChange={ e => setEmail(e.target.value) } />
+        </div>
+        <div className="inline-flex w-full">
+          <label htmlFor="passwd" className="w-16 me-4">password</label>
+          <input id="passwd" className="border rounded-xl w-full" value={password} onChange={ e => setPassword(e.target.value) } />
+        </div>
+        <button className="border px-5 py-1 rounded-full w-full bg-sky-500/80 font-bold text-white" onClick={ () => auth.signUp({ email, password }) }>
+          Sign Up
+        </button>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
-      </div>
+      </form>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
       <div className="grid grid-cols-2 gap-x-4">
-       <buttons.FacebookLoginButton />
         <buttons.GoogleLoginButton />
         <buttons.GithubLoginButton />
-        <buttons.TwitterLoginButton />
-        <buttons.AmazonLoginButton />
-        <buttons.InstagramLoginButton />
-        <buttons.LinkedInLoginButton />
-        <buttons.MicrosoftLoginButton />
-        <buttons.BufferLoginButton />
-        <buttons.TelegramLoginButton />
-        <buttons.AppleLoginButton />
-        <buttons.DiscordLoginButton />
-        <buttons.SlackLoginButton />
-        <buttons.OktaLoginButton />
-        <buttons.YahooLoginButton />
       </div>
     </div>
   )
