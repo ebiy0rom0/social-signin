@@ -1,17 +1,24 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 import * as buttons from 'react-social-login-buttons'
 import { useAuth } from '@/hooks/useAuth'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function Index() {
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
   const { auth } = useAuth()
 
-  const signup = async () => await auth.signUp({ email, password })
+  const signup = async (e: FormEvent) => {
+    e.preventDefault()
+    const { data, error } = await auth.signUp({ email, password })
+    console.log(error ? error : data)
+    await session()
+  }
+  const session = async () => {
+    const { data, error } = await auth.getSession()
+    console.log(error ? error : data)
+  }
 
   return (
     <div className="flex flex-col w-screen h-screen justify-center items-center">
@@ -23,8 +30,8 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1 className="text-3xl font-bold my-4">Vite + React</h1>
-      <form className="w-96">
+      <h1 className="text-3xl font-bold my-4">This is a sign up page</h1>
+      <form className="w-96" onSubmit={ async e => await signup(e) }>
         <div className="grid gap-5">
           <div>
             <label htmlFor="email" className="block mb-2 ms-1 font-medium">e-mail</label>
@@ -74,21 +81,13 @@ function App() {
               font-medium
               border-none
               rounded-md
-              bg-blue-400
-              border-blue-400/80
-              hover:bg-blue-500/90
-              active:bg-blue-500
+              bg-emerald-400
+              hover:bg-emerald-500/90
+              active:bg-emerald-500
             "
-            onClick={ async () => console.log(await signup()) }
           >
             Sign Up
           </button>
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
         </div>
       </form>
       <p className="read-the-docs">
@@ -102,4 +101,4 @@ function App() {
   )
 }
 
-export default App
+export default Index
