@@ -1,8 +1,8 @@
 import { FormEvent, useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
-import * as buttons from 'react-social-login-buttons'
 import { useAuth } from '@/hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 function Index() {
   const [ email, setEmail ] = useState("")
@@ -11,13 +11,8 @@ function Index() {
 
   const signup = async (e: FormEvent) => {
     e.preventDefault()
-    const { data, error } = await auth.signUp({ email, password })
-    console.log(error ? error : data)
-    await session()
-  }
-  const session = async () => {
-    const { data, error } = await auth.getSession()
-    console.log(error ? error : data)
+    const { error } = await auth.signUp({ email, password, options: { data: { first_name: 'test', last_name: 'name' } } })
+    console.log(error)
   }
 
   return (
@@ -90,12 +85,8 @@ function Index() {
           </button>
         </div>
       </form>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <div className="grid grid-cols-2 gap-x-4">
-        <buttons.GoogleLoginButton />
-        <buttons.GithubLoginButton />
+      <div className="w-96 grid justify-items-end mt-4">
+        <Link to="/signin">sign in is here</Link>
       </div>
     </div>
   )
