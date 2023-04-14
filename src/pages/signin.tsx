@@ -21,7 +21,7 @@ const Signin: React.FC = () => {
           }}
           providers={['google', 'github']}
           socialLayout='horizontal'
-          redirectTo={import.meta.url + 'home'}
+          redirectTo={'http://localhost:5173/home'}
           showLinks={false}
         />
         <div className="grid justify-items-end">
