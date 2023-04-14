@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { createClient } from "@supabase/supabase-js"
+import { SupabaseClient, createClient } from "@supabase/supabase-js"
 import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
 
 type Props = {
@@ -7,6 +7,7 @@ type Props = {
 };
 
 type Auth = {
+  supabase: SupabaseClient
   auth: SupabaseAuthClient
 }
 
@@ -18,8 +19,12 @@ const AuthContextProvider: React.FC<Props> = ({ children }) => {
     import.meta.env.VITE_SUPABASE_KEY,
   )
 
+  const getUser = async () => {
+    const user = await supabase.auth.getUser()
+  }
+
   return (
-    <AuthContext.Provider value={{ auth: supabase.auth }}>
+    <AuthContext.Provider value={{ supabase, auth: supabase.auth }}>
       { children }
     </AuthContext.Provider>
   );
