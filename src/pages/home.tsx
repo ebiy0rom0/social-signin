@@ -11,9 +11,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     (async () => {
       const { data, error } = await supabase.auth.getSession()
-      if (error) {
-        alert(error)
-        redirect("/")
+      if (error || data.session == null) {
+        alert('no session')
+        window.location.href = '/'
       }
       console.log(data)
 
@@ -30,6 +30,8 @@ const Home: React.FC = () => {
       }
     })()
 
+    // サンプルのため、画面離脱時は強制サインアウト
+    return () => { supabase.auth.signOut() }
   }, [])
 
   return (
