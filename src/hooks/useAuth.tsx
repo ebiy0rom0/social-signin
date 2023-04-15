@@ -9,6 +9,7 @@ type Props = {
 type Auth = {
   supabase: SupabaseClient
   auth: SupabaseAuthClient
+  redirect: (message: string) => void
 }
 
 const AuthContext = createContext<Auth | null>(null);
@@ -19,12 +20,13 @@ const AuthContextProvider: React.FC<Props> = ({ children }) => {
     import.meta.env.VITE_SUPABASE_KEY,
   )
 
-  const getUser = async () => {
-    const user = await supabase.auth.getUser()
+  const redirect = (message: string) => {
+    alert(`no session: [cause]${message}`)
+    window.location.href = '/'
   }
 
   return (
-    <AuthContext.Provider value={{ supabase, auth: supabase.auth }}>
+    <AuthContext.Provider value={{ supabase, auth: supabase.auth, redirect }}>
       { children }
     </AuthContext.Provider>
   );
