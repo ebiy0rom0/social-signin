@@ -1,6 +1,6 @@
 import { useAuth } from '@/hooks/useAuth'
 import { Auth } from '@supabase/auth-ui-react'
-import { ThemeMinimal, ThemeSupa } from '@supabase/auth-ui-shared'
+import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { Link } from 'react-router-dom'
 
 const Signin: React.FC = () => {

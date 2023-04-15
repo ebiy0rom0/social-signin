@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from "@/hooks/useAuth"
 import { Session } from '@supabase/supabase-js'
-import { redirect } from 'react-router'
 
 const Home: React.FC = () => {
   const [ session, setSession ] = useState<Session | null>(null)
